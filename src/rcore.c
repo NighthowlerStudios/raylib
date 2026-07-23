@@ -494,7 +494,7 @@ extern int InitPlatform(void);          // Initialize platform (graphics, inputs
 extern void ClosePlatform(void);        // Close platform
 
 static void InitTimer(void);                                // Initialize timer, hi-resolution if available (required by InitPlatform())
-static void SetupViewport(int width, int height);           // Set viewport for a provided width and height
+void SetupViewport(int width, int height);           // Set viewport for a provided width and height
 
 static void ScanDirectoryFiles(const char *basePath, FilePathList *list, const char *filter, unsigned int expectedFileCount, bool scanSubdirs); // Scan all files and directories in a base path
 
@@ -533,8 +533,8 @@ const char *TextFormat(const char *text, ...); // Formatting of text with variab
     #include "platforms/rcore_android.c"
 #elif defined(PLATFORM_MEMORY)
     #include "platforms/rcore_memory.c"
-#else
-    // TODO: Include your custom platform backend!
+#elif !defined(PLATFORM_EXTERNAL)
+    // TODO: Include your custom platform backend!  Define PLATFORM_EXTERNAL to silence the compiler message.  Useful for wrappers who won't merge their ports.
     // i.e software rendering backend or console backend!
     #pragma message ("WARNING: No [rcore] platform defined")
 #endif
